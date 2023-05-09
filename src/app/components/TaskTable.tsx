@@ -1,21 +1,30 @@
+import { Table } from "antd";
 import { Task } from "../models/task";
-import { TaskRow } from "./TaskRow";
+import { ColumnsType } from "antd/es/table";
 
 export const TaskTable = ({ tasks }: { tasks: Task[] }) => {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>タスク名</th>
-          <th>ユーザー名</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tasks.map((task) => (
-          <TaskRow task={task} key={task.id} />
-        ))}
-      </tbody>
-    </table>
-  );
+  const columns: ColumnsType<Task> = [
+    {
+      title: "ID",
+      key: "id",
+      dataIndex: "id",
+    },
+    {
+      title: "完了済みか",
+      key: "completed",
+      dataIndex: "completed",
+      render: (value: boolean) => (value ? "☑" : "☐"),
+    },
+    {
+      title: "タスク名",
+      key: "title",
+      dataIndex: "title",
+    },
+    {
+      title: "ユーザーID",
+      key: "userId",
+      dataIndex: "userId",
+    },
+  ];
+  return <Table<Task> dataSource={tasks} rowKey="id" columns={columns}></Table>;
 };
