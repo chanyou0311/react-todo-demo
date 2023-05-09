@@ -1,32 +1,36 @@
-type task = {
+"use client";
+import { ChangeEvent, useState } from "react";
+
+type Task = {
   userId: number;
   id: number;
   title: string;
   completed: boolean;
 };
-type TaskProps = {
-  tasks: task[];
-};
+const FilterableTaskTable = ({ tasks }: { tasks: Task[] }) => {
+  const [searchTitle, setSearchTitle] = useState("");
+  const filteredTasks = tasks.filter((task) => task.title.match(searchTitle));
 
-const FilterableTaskTable = ({ tasks }: TaskProps) => {
   return (
     <>
       <h1>タスクの一覧</h1>
-      <SearchBar />
-      <TaskTable tasks={tasks} />
+      <SearchBar handleChange={(e) => setSearchTitle(e.target.value)} />
+      <TaskTable tasks={filteredTasks} />
     </>
   );
 };
-const SearchBar = () => {
+type SearchBarProps = {
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+const SearchBar = ({ handleChange }: SearchBarProps) => {
   return (
-    <form>
+    <>
       <label htmlFor="title">タスク名: </label>
-      <input type="text" name="title" id="title" />
-      <input type="submit" value="検索" />
-    </form>
+      <input type="text" name="title" id="title" onChange={handleChange} />
+    </>
   );
 };
-const TaskTable = ({ tasks }: TaskProps) => {
+const TaskTable = ({ tasks }: { tasks: Task[] }) => {
   return (
     <table>
       <thead>
@@ -44,7 +48,7 @@ const TaskTable = ({ tasks }: TaskProps) => {
     </table>
   );
 };
-const TaskRow = ({ task }: { task: task }) => {
+const TaskRow = ({ task }: { task: Task }) => {
   return (
     <tr>
       <td>{task.completed ? "☑" : "☐"}</td>
