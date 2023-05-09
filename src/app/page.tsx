@@ -1,4 +1,3 @@
-"use client";
 import { FilterableTaskTable } from "./components/FilterableTaskTable";
 
 const Tasks = [
