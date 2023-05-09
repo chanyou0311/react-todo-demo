@@ -1,3 +1,4 @@
+import { Input } from "antd";
 import { ChangeEvent } from "react";
 
 type SearchBarProps = {
@@ -5,9 +6,11 @@ type SearchBarProps = {
 };
 export const SearchBar = ({ handleChange }: SearchBarProps) => {
   return (
-    <>
-      <label htmlFor="title">タスク名: </label>
-      <input type="text" name="title" id="title" onChange={handleChange} />
-    </>
+    <Input
+      type="text"
+      name="title"
+      placeholder="タスク名"
+      onChange={handleChange}
+    />
   );
 };
